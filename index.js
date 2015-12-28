@@ -16,7 +16,7 @@ module.exports = {
 			.then(function(next) {
 				// Sanity checks {{{
 				if (!mindstate.config.mysql.enabled) {
-					if (mindstate.program.verbose) console.log(colors.grey('MySQL backup is disabled'));
+					if (mindstate.verbose) console.log(colors.blue('[MySQL]'), 'MySQL backup is disabled');
 					return next('SKIP');
 				}
 				next();
@@ -26,7 +26,7 @@ module.exports = {
 				// Check for binary {{{
 				which('mysqldump', function(err) {
 					if (err) {
-						if (mindstate.program.verbose) console.log(colors.grey('`mysqldump` is not in PATH'));
+						if (mindstate.verbose) console.log(colors.blue('[MySQL]'), '`mysqldump` is not in PATH');
 						return next('SKIP');
 					}
 					next();
@@ -34,7 +34,7 @@ module.exports = {
 				// }}}
 			})
 			.then(function(next) {
-				if (mindstate.program.verbose) console.log(colors.blue('[MySQL]'), 'Run', mindstate.config.mysql.command);
+				if (mindstate.verbose) console.log(colors.blue('[MySQL]'), 'Run', mindstate.config.mysql.command);
 				next();
 			})
 			.execDefaults({
